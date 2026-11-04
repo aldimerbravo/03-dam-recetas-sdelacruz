@@ -10,10 +10,11 @@ class RecetasApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return MaterialApp(
-      title: "Recetas App",
+      title: "Recetas del Mayab",
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
-    );
+      home: SplashScreen(),
+    ); // MaterialApp
   }
 }

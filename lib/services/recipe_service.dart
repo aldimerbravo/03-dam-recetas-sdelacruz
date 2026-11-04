@@ -1,19 +1,24 @@
 import 'dart:convert';
+
+import 'package:recetas_app/models/receta.dart';
 import 'package:http/http.dart' as http;
-import '../models/receta.dart';
 
 class RecipeService {
-  final String _baseUrl = 'https://dummyjson.com/recipes';
+  static const String _baseUrl = "https://dummyjson.com/recipes";
 
   Future<List<Receta>> obtenerRecetas() async {
-    final response = await http.get(Uri.parse(_baseUrl));
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final List recipesJson = data['recipes'];
-      return recipesJson.map((json) => Receta.fromJson(json)).toList();
+    final Uri url = Uri.parse(_baseUrl);
+    final http.Response respuesta = await http.get(url);
+    // evaluamos la respuesta
+    if (respuesta.statusCode == 200) {
+      final Map<String, dynamic> datos = jsonDecode(respuesta.body);
+      final List<dynamic> listaRecetas = datos['recipes'];
+      print(listaRecetas);
+      return listaRecetas
+          .map((recetaJson) => Receta.fromJson(recetaJson))
+          .toList();
     } else {
-      throw Exception('Error al cargar las recetas');
+      throw Exception("error al obtener las recetas: ${respuesta.statusCode}");
     }
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recetas_app/models/receta.dart';
 import 'package:recetas_app/services/recipe_service.dart';
 import 'package:recetas_app/widgets/receta_card.dart';
-import 'package:recetas_app/screens/detalle_receta_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,54 +23,29 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFAF6F1),
       appBar: AppBar(
-        title: const Text(
-          'Recetas App',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        backgroundColor: const Color(0xFF4E342E),
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
+        title: const Text('RecetasApp'),
+        backgroundColor: const Color.fromARGB(255, 228, 222, 220),
+      ), // AppBar
       body: FutureBuilder<List<Receta>>(
         future: _futureRecetas,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: Color(0xFF8D6E63)),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            return Center(
-              child: Text("Error al conectarse con la api : ${snapshot.error}"),
-            );
+            return Center(child: Text('Error: ${snapshot.error}'));
           }
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text("No hay recetas disponibles"));
-          }
-
           final recetas = snapshot.data!;
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 6),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: recetas.length,
             itemBuilder: (context, index) {
-              final receta = recetas[index];
-              return RecetaCard(
-                receta: receta,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetalleRecetaScreen(receta: receta),
-                    ),
-                  );
-                },
-              );
+              return RecetaCard(receta: recetas[index]);
             },
-          );
+          ); // ListView.builder
         },
-      ),
-    );
+      ), // FutureBuilder
+    ); // Scaffold
   }
 }

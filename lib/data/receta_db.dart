@@ -16,10 +16,10 @@ class RecetaDb {
 
   Future<Database> _abrir() async {
     final ruta = join(await getDatabasesPath(), _nombreArchivo);
-    return openDatabase(
+    return openDatabase(     
       ruta,
       version: 1,
-      onCreate: (db, version) async {
+      onCreate: (db, version) async {     
         await db.execute('''
           CREATE TABLE $_tabla (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

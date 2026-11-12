@@ -88,7 +88,7 @@ class _DetalleRecetaScreenState extends State<DetalleRecetaScreen> {
               ),
             ),
           ),
-          // 👇 aquí, DESPUÉS de cerrar el .map con "),"
+       
           const SizedBox(height: 24),
           ResenaFormScreen(recetaId: receta.id ?? 0),
         ],

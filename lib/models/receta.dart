@@ -12,6 +12,8 @@ class Receta {
   final String cocina;
   final String dificultad;
 
+  
+
   const Receta({
     this.id,
     required this.nombre,
